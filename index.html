@@ -1,943 +1,680 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ALIREZA — null</title>
+    <meta
+      name="description"
+      content="علیرضا محمدزاده مقدم، توسعه‌دهنده وب و علاقه‌مند به هوش مصنوعی"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Vazirmatn:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Vazirmatn:wght@300;400;500;700;800&display=swap"
       rel="stylesheet"
     />
-    <style>
-      :root {
-        --void: #04070a;
-        --void-2: #070d11;
-        --phosphor: #39ff14;
-        --phosphor-dim: #2bae66;
-        --ash: #9fb4ab;
-        --mono: "JetBrains Mono", monospace;
-        --fa: "Vazirmatn", Tahoma, sans-serif;
-      }
-
-      /* متغیرهای تم روشن */
-      :root[data-theme="light"] {
-        --void: #f4f6f8;
-        --void-2: #ffffff;
-        --phosphor: #00c3ff;
-        --phosphor-dim: #0077ff;
-        --ash: #2c3e50;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: var(--fa);
-        background: var(--void);
-        color: var(--ash);
-        overflow-x: hidden;
-        line-height: 1.9;
-      }
-      a {
-        color: inherit;
-      }
-      ::selection {
-        background: var(--phosphor);
-        color: var(--void);
-      }
-      :focus-visible {
-        outline: 2px solid var(--phosphor);
-        outline-offset: 3px;
-      }
-
-      /* ---------- GLASS PILL NAV ---------- */
-      .navwrap {
-        position: fixed;
-        top: 18px;
-        inset-inline: 0;
-        z-index: 50;
-        display: flex;
-        justify-content: center;
-        padding: 0 14px;
-      }
-      nav {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 7px 10px;
-        border-radius: 999px;
-        background: rgba(10, 18, 14, 0.45);
-        backdrop-filter: blur(16px) saturate(140%);
-        -webkit-backdrop-filter: blur(16px) saturate(140%);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        box-shadow:
-          0 8px 30px rgba(0, 0, 0, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.12);
-        max-width: 100%;
-        overflow-x: auto;
-        scrollbar-width: none;
-      }
-      nav::-webkit-scrollbar {
-        display: none;
-      }
-      nav a {
-        font-family: var(--mono);
-        font-size: 0.82rem;
-        font-weight: 700;
-        text-decoration: none;
-        color: var(--ash);
-        white-space: nowrap;
-        padding: 9px 16px;
-        border-radius: 999px;
-        transition: 0.25s;
-      }
-      nav a:hover {
-        color: #eafff0;
-      }
-      nav a.active {
-        background: var(--phosphor);
-        color: var(--void);
-        box-shadow: 0 0 18px rgba(57, 255, 20, 0.45);
-      }
-
-      /* استایل‌های نوار ناوبری در تم روشن */
-      [data-theme="light"] nav {
-        background: rgba(255, 255, 255, 0.6);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow:
-          0 8px 30px rgba(0, 0, 0, 0.05),
-          inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      }
-      [data-theme="light"] nav a.active {
-        box-shadow: 0 0 18px rgba(0, 195, 255, 0.45);
-      }
-
-      /* استایل‌های دکمه تغییر تم */
-      .theme-toggle {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 999px;
-        margin-inline-start: auto;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px;
-        color: var(--ash);
-        transition: all 0.3s ease;
-      }
-      .theme-toggle:hover {
-        background: rgba(255, 255, 255, 0.2);
-        color: var(--phosphor);
-      }
-      #theme-icon {
-        transition: transform 0.5s ease;
-      }
-
-      /* دکمه تغییر تم در تم روشن */
-      [data-theme="light"] .theme-toggle {
-        background: rgba(0, 0, 0, 0.05);
-        border-color: rgba(0, 0, 0, 0.1);
-      }
-      [data-theme="light"] .theme-toggle:hover {
-        background: rgba(0, 0, 0, 0.1);
-      }
-
-      /* ---------- HERO ---------- */
-      .hero {
-        position: relative;
-        min-height: 100svh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding: 0 clamp(20px, 6vw, 80px) clamp(40px, 8vh, 90px);
-        overflow: hidden;
-      }
-      .hero__bg {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        background: url("1.webp") center 22% / cover no-repeat;
-        transform-origin: center 30%;
-        transform: scale(1.35);
-        will-change: transform;
-        transition: transform 0.15s linear;
-      }
-
-      /* تغییر عکس پس‌زمینه در تم روشن */
-      [data-theme="light"] .hero__bg {
-        background-image: url("2.webp") !important;
-        background-position: center 38% !important;
-        transform-origin: center 20% !important;
-        background-size: cover !important;
-      }
-      @media (max-width: 600px) {
-        [data-theme="light"] .hero__bg {
-          background-size: contain !important;
-          background-position: center 14% !important;
-        }
-      }
-
-      .hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        background:
-          radial-gradient(
-            120% 80% at 50% 0%,
-            transparent 35%,
-            rgba(4, 7, 10, 0.6) 100%
-          ),
-          linear-gradient(
-            180deg,
-            rgba(4, 7, 10, 0.35) 0%,
-            rgba(4, 7, 10, 0.12) 42%,
-            rgba(4, 7, 10, 0.94) 100%
-          );
-      }
-
-      /* روشن کردن هاله تاریک (Overlay) روی عکس برای تم روشن */
-      [data-theme="light"] .hero::after {
-        background:
-          radial-gradient(
-            120% 80% at 50% 0%,
-            transparent 35%,
-            rgba(244, 246, 248, 0.6) 100%
-          ),
-          linear-gradient(
-            180deg,
-            rgba(244, 246, 248, 0.35) 0%,
-            rgba(244, 246, 248, 0.12) 42%,
-            rgba(244, 246, 248, 0.94) 100%
-          );
-      }
-
-      .hero__name {
-        position: absolute;
-        inset-inline: 0;
-        bottom: 32vh;
-        z-index: 2;
-        text-align: center;
-        font-family: var(--mono);
-        font-weight: 800;
-        font-size: clamp(3rem, 17vw, 15rem);
-        letter-spacing: 0.05em;
-        color: transparent;
-        -webkit-text-stroke: 1.5px rgba(57, 255, 20, 0.4);
-        text-shadow: 0 0 60px rgba(57, 255, 20, 0.15);
-        user-select: none;
-        pointer-events: none;
-        white-space: nowrap;
-      }
-
-      /* اصلاح رنگ نام "علیرضا" در تم روشن */
-      [data-theme="light"] .hero__name {
-        -webkit-text-stroke: 1.5px #00c3ff;
-        text-shadow: 0 0 60px rgba(0, 195, 255, 0.25);
-      }
-
-      .hero__content {
-        position: relative;
-        z-index: 3;
-        max-width: 680px;
-      }
-      .kicker {
-        font-family: var(--mono);
-        font-size: clamp(0.78rem, 2.5vw, 0.9rem);
-        color: var(--phosphor);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 14px;
-      }
-      .kicker .dot {
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: var(--phosphor);
-        box-shadow: 0 0 12px var(--phosphor);
-        animation: pulse 2s infinite;
-      }
-
-      /* matrix text */
-      .matrix {
-        direction: rtl;
-        font-family: var(--mono);
-        font-size: clamp(1.4rem, 6vw, 2.6rem);
-        font-weight: 800;
-        color: #eafff0;
-        line-height: 1.5;
-      }
-      .matrix .ltr {
-        direction: ltr;
-        unicode-bidi: isolate;
-      }
-      .matrix .ch {
-        display: inline-block;
-        text-align: center;
-        font-variant-numeric: tabular-nums;
-        transition:
-          color 0.1s,
-          text-shadow 0.1s;
-      }
-      .matrix .ch.on {
-        color: var(--phosphor);
-        text-shadow: 0 2px 6px rgba(57, 255, 20, 0.6);
-      }
-
-      /* اصلاح سایه کلمات ماتریکس در تم روشن */
-      [data-theme="light"] .matrix .ch.on {
-        text-shadow: 0 2px 6px rgba(0, 195, 255, 0.6);
-      }
-
-      .hero__sub {
-        margin-top: 16px;
-        color: var(--ash);
-        font-size: 1.02rem;
-        max-width: 560px;
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.3;
-        }
-      }
-
-      /* ---------- SECTIONS ---------- */
-      section {
-        padding: clamp(64px, 10vh, 120px) clamp(20px, 8vw, 120px);
-      }
-      .label {
-        font-family: var(--mono);
-        color: var(--phosphor-dim);
-        font-size: 0.85rem;
-        letter-spacing: 0.2em;
-        margin-bottom: 12px;
-      }
-      .heading {
-        font-size: clamp(1.5rem, 4vw, 2.4rem);
-        color: #eafff0;
-        font-weight: 800;
-        margin-bottom: 28px;
-      }
-
-      /* اصلاح رنگ heading، لینک‌ها و غیره در تم روشن */
-      [data-theme="light"] .heading,
-      [data-theme="light"] .ghost,
-      [data-theme="light"] nav a:hover,
-      [data-theme="light"] .matrix {
-        color: var(--ash);
-      }
-
-      .about p {
-        max-width: 740px;
-        font-size: 1.05rem;
-        color: var(--ash);
-        margin-bottom: 16px;
-      }
-      .about strong {
-        color: var(--phosphor);
-      }
-
-      /* skills: clean filled grid (4 / 2 / 1) */
-      .skills {
-        display: grid;
-        gap: 1px;
-        background: rgba(57, 255, 20, 0.12);
-        border: 1px solid rgba(57, 255, 20, 0.12);
-        border-radius: 16px;
-        overflow: hidden;
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      /* اصلاح رنگ‌های بوردر skills در تم روشن */
-      [data-theme="light"] .skills {
-        background: rgba(0, 195, 255, 0.12);
-        border-color: rgba(0, 195, 255, 0.2);
-      }
-
-      .skill {
-        background: var(--void-2);
-        padding: 26px;
-        transition: 0.3s;
-        min-height: 150px;
-      }
-      .skill:hover {
-        background: #0b1510;
-      }
-
-      /* هاور کارت‌ها در تم روشن */
-      [data-theme="light"] .skill:hover {
-        background: #e8f0f8;
-      }
-
-      .skill .num {
-        font-family: var(--mono);
-        color: var(--phosphor-dim);
-        font-size: 0.8rem;
-      }
-      .skill h3 {
-        color: var(--phosphor);
-        font-size: 1.1rem;
-        margin: 8px 0 6px;
-        font-weight: 800;
-      }
-      .skill p {
-        font-size: 0.92rem;
-        color: var(--ash);
-      }
-
-      /* contact */
-      .contact-wrap {
-        border: 1px solid rgba(57, 255, 20, 0.18);
-        border-radius: 18px;
-        background: linear-gradient(160deg, #0a130d, #060a07);
-        padding: clamp(26px, 5vw, 48px);
-        max-width: 640px;
-      }
-
-      /* پس‌زمینه فرم تماس در تم روشن */
-      [data-theme="light"] .contact-wrap {
-        border-color: rgba(0, 195, 255, 0.2);
-        background: linear-gradient(160deg, #ffffff, #f0f4f8);
-      }
-
-      .contact-wrap p {
-        color: var(--ash);
-        margin-bottom: 26px;
-      }
-      .btnrow {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 28px;
-        align-items: center;
-      }
-      .magnetic {
-        display: inline-block;
-        will-change: transform;
-      }
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        font-family: var(--mono);
-        font-weight: 700;
-        font-size: 1.05rem;
-        background: linear-gradient(135deg, #39ff14, #0fd96a);
-        color: #04140a;
-        padding: 16px 30px;
-        border-radius: 999px;
-        text-decoration: none;
-        box-shadow: 0 6px 24px rgba(57, 255, 20, 0.28);
-        transition: all 0.25s;
-      }
-      .cta:hover {
-        background: linear-gradient(135deg, #0fd96a, #39ff14);
-        box-shadow: 0 12px 38px rgba(57, 255, 20, 0.45);
-      }
-
-      /* رنگ دکمه اصلی در تم روشن */
-      [data-theme="light"] .cta {
-        background: linear-gradient(135deg, #00c3ff, #0077ff);
-        color: #ffffff;
-        box-shadow: 0 6px 24px rgba(0, 195, 255, 0.3);
-      }
-      [data-theme="light"] .cta:hover {
-        background: linear-gradient(135deg, #0077ff, #00c3ff);
-        box-shadow: 0 12px 38px rgba(0, 195, 255, 0.5);
-      }
-
-      .cta svg {
-        width: 20px;
-        height: 20px;
-      }
-      .ghost {
-        display: inline-flex;
-        align-items: center;
-        gap: 28px;
-        font-family: var(--mono);
-        font-weight: 700;
-        font-size: 0.95rem;
-        color: #eafff0;
-        text-decoration: none;
-        padding: 15px 24px;
-        border-radius: 999px;
-        border: 1px solid rgba(57, 255, 20, 0.3);
-        transition: 0.25s;
-      }
-      .ghost:hover {
-        background: rgba(57, 255, 20, 0.08);
-        border-color: var(--phosphor);
-      }
-
-      /* رنگ دکمه روح در تم روشن */
-      [data-theme="light"] .ghost {
-        border-color: rgba(0, 195, 255, 0.4);
-      }
-      [data-theme="light"] .ghost:hover {
-        background: rgba(0, 195, 255, 0.1);
-        border-color: var(--phosphor);
-      }
-
-      .ghost svg {
-        width: 18px;
-        height: 18px;
-      }
-
-      footer {
-        padding: 36px;
-        text-align: center;
-        font-family: var(--mono);
-        font-size: 0.8rem;
-        color: #5f7a6c;
-        border-top: 1px solid rgba(57, 255, 20, 0.1);
-      }
-
-      /* رنگ فوتر در تم روشن */
-      [data-theme="light"] footer {
-        border-top-color: rgba(0, 195, 255, 0.2);
-        color: var(--ash);
-      }
-
-      footer b {
-        color: var(--phosphor);
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(32px);
-        transition:
-          opacity 0.8s ease,
-          transform 0.8s ease;
-      }
-      .reveal.show {
-        opacity: 1;
-        transform: none;
-      }
-
-      /* ---------- TABLET / MOBILE ---------- */
-      @media (max-width: 900px) {
-        .skills {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-      @media (max-width: 600px) {
-        .navwrap {
-          top: 12px;
-        }
-        nav a {
-          padding: 8px 13px;
-          font-size: 0.76rem;
-        }
-        .hero {
-          padding-bottom: 42px;
-        }
-        .hero__bg {
-          background-size: contain;
-          background-position: center 14%;
-          transform: scale(1);
-          background-color: var(--void);
-        }
-        .hero__name {
-          bottom: 40vh;
-          font-size: 24vw;
-          letter-spacing: 0.02em;
-        }
-        .hero__sub {
-          font-size: 0.96rem;
-        }
-        .matrix {
-          font-size: 7vw;
-        }
-        .cta,
-        .ghost {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-      @media (max-width: 420px) {
-        .skills {
-          grid-template-columns: 1fr;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          animation: none !important;
-          transition: none !important;
-        }
-        .reveal {
-          opacity: 1;
-          transform: none;
-        }
-        .hero__bg {
-          transform: scale(1) !important;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <div class="navwrap">
-      <nav>
-        <a href="#home" class="active">HOME</a>
-        <a href="#about">ABOUT</a>
-        <a href="#skills">SKILLS</a>
-        <a href="#contact">CONTACT</a>
-        <button id="theme-toggle" class="theme-toggle" aria-label="تغییر تم">
-          <svg
-            id="theme-icon"
-            viewBox="0 0 24 24"
-            width="22"
-            height="22"
-            stroke="currentColor"
-            stroke-width="2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <!-- پیش‌فرض: آیکون خورشید -->
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-        </button>
-      </nav>
+    <div class="loader" id="loader">
+      <canvas id="loader-canvas"></canvas>
+      <div class="loader-content">
+        <span class="loader-kicker">INITIALIZING PORTFOLIO</span>
+        <strong>ALIREZA</strong>
+        <div class="loader-line"><span id="loader-bar"></span></div>
+        <small id="loader-count">0%</small>
+      </div>
     </div>
 
-    <!-- HERO -->
-    <header class="hero" id="home">
-      <div class="hero__bg" aria-hidden="true"></div>
-      <div class="hero__name" aria-hidden="true">ALIREZA</div>
-      <div class="hero__content">
-        <p class="kicker">
-          <span class="dot"></span> visitor@null:~$ developer online
-        </p>
-        <div
-          class="matrix"
-          id="matrix"
-          data-text="از null تا همه‌چیز."
-          aria-label="از null تا همه‌چیز"
-        ></div>
-        <p class="hero__sub">
-          علیرضا محمدزاده مقدم — توسعه‌دهنده وب و علاقه‌مند هوش مصنوعی. کد
-          می‌نویسم تا از صفر، چیزی واقعی ساخته شود.
-        </p>
+    <canvas id="scene"></canvas>
+    <div class="grain"></div>
+    <div class="cursor" id="cursor"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="ALIREZA">
+        <span></span>
+        <b>ALIREZA</b>
+        <small>/ null</small>
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+
+      <div class="actions">
+        <button class="icon-btn" id="sound-toggle" aria-label="افکت صوتی">
+          <i data-lucide="volume-x"></i>
+        </button>
+        <button class="icon-btn" id="theme-toggle" aria-label="تغییر تم">
+          <i data-lucide="sun"></i>
+        </button>
+        <button
+          class="icon-btn menu-btn"
+          id="menu-toggle"
+          aria-label="منوی موبایل"
+        >
+          <i data-lucide="menu"></i>
+        </button>
       </div>
     </header>
-
-    <!-- ABOUT -->
-    <section id="about" class="about reveal">
-      <p class="label">// ABOUT</p>
-      <h2 class="heading">من از <strong>null</strong> شروع کردم</h2>
-      <p>
-        واقعاً از <strong>null</strong>. اولین روزهایی که پای کامپیوتر نشستم،
-        حتی بلد نبودم خاموشش کنم؛ هر بار دکمه‌ی پاور را نگه می‌داشتم تا قطع شود.
-        کل دانشم همان یک دکمه بود.
-      </p>
-      <p>
-        از همان نقطه‌ی صفر شروع کردم به یاد گرفتن — یک خط کد، یک خطا، یک تلاش
-        دوباره. امروز سایت می‌سازم، فروشگاه آنلاین راه می‌اندازم و روی هوش
-        مصنوعی کار می‌کنم.
-        <strong>null</strong> فقط اسم تیم ما نیست؛ یادآور همان جایی است که از آن
-        بلند شدیم.
-      </p>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="reveal">
-      <p class="label">// STACK</p>
-      <h2 class="heading">چه کارهایی می‌کنم</h2>
-      <div class="skills">
-        <div class="skill">
-          <p class="num">01</p>
-          <h3>هوش مصنوعی</h3>
-          <p>تولید تصویر، ویدئو و مدل‌های زبانی</p>
-        </div>
-        <div class="skill">
-          <p class="num">02</p>
-          <h3>زبان‌ها</h3>
-          <p>Python، JavaScript، Rust</p>
-        </div>
-        <div class="skill">
-          <p class="num">03</p>
-          <h3>Django</h3>
-          <p>توسعه‌ی بک‌اند و API</p>
-        </div>
-        <div class="skill">
-          <p class="num">04</p>
-          <h3>React</h3>
-          <p>رابط کاربری مدرن و واکنش‌گرا</p>
-        </div>
-        <div class="skill">
-          <p class="num">05</p>
-          <h3>HTML &amp; CSS</h3>
-          <p>چیدمان دقیق و طراحی واکنش‌گرا</p>
-        </div>
-        <div class="skill">
-          <p class="num">06</p>
-          <h3>WordPress</h3>
-          <p>طراحی و توسعه‌ی سایت اختصاصی</p>
-        </div>
-        <div class="skill">
-          <p class="num">07</p>
-          <h3>WooCommerce</h3>
-          <p>راه‌اندازی فروشگاه آنلاین</p>
-        </div>
-        <div class="skill">
-          <p class="num">08</p>
-          <h3>SEO</h3>
-          <p>بهینه‌سازی برای موتورهای جستجو</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="reveal">
-      <p class="label">// CONTACT</p>
-      <h2 class="heading">پروژه‌ای داری؟ بزن بریم</h2>
-      <div class="contact-wrap">
-        <p>برای همکاری، طراحی سایت یا فروشگاه آنلاین، یک پیام کافی است.</p>
-        <div class="btnrow">
-          <span class="magnetic" id="magnetic">
-            <a
-              class="cta"
-              href="https://t.me/Alireza8188000"
-              target="_blank"
-              rel="noopener"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"
-                />
-              </svg>
-              بزن شروع کنیم
+    
+    <main>
+      <section class="hero section" id="home">
+        <div class="hero-copy reveal">
+          <p class="terminal">visitor@null:~$ developer online</p>
+          <h1>
+            از <span>null</span><br />
+            تا همه‌چیز
+          </h1>
+          <div class="typing"><span id="typed"></span><em>|</em></div>
+          <p class="lead">
+            علیرضا محمدزاده مقدم — توسعه‌دهنده وب و علاقه‌مند به هوش مصنوعی. کد
+            می‌نویسم تا از صفر، چیزی واقعی، زیبا و قابل استفاده ساخته شود.
+          </p>
+          <div class="hero-buttons">
+            <a class="gradient-btn magnetic" href="#projects">
+              <i data-lucide="sparkles"></i>
+              دیدن پروژه‌ها
             </a>
-
-            <a class="cta" href="tel:+989931370898">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1l-2.2 2.1z"
-                />
-              </svg>
-              تماس با من
+            <a class="glass-btn magnetic" href="#contact">
+              <i data-lucide="send"></i>
+              ارتباط
             </a>
-          </span>
+          </div>
+        </div>
+        <div class="hero-hud reveal" aria-label="وضعیت کاری علیرضا">
+          <div class="hud-header">
+            <span class="hud-dot"></span>
+            <span>developer status</span>
+          </div>
+
+          <div class="hud-main">
+            <strong>NULL / ACTIVE</strong>
+            <p>Web Developer • AI Explorer</p>
+          </div>
+
+          <div class="hud-stats">
+            <div>
+              <span>Focus</span>
+              <b>Web + AI</b>
+            </div>
+            <div>
+              <span>Builds</span>
+              <b>Sites / Shops</b>
+            </div>
+            <div>
+              <span>Mode</span>
+              <b>Learning</b>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="marquee">
+        <div>
+          <span>ALIREZA</span><span>NULL TO EVERYTHING</span><span>AI</span
+          ><span>REACT</span><span>RUST</span><span>WORDPRESS</span
+          ><span>SEO</span> <span>ALIREZA</span><span>NULL TO EVERYTHING</span
+          ><span>AI</span><span>REACT</span><span>RUST</span
+          ><span>WORDPRESS</span><span>SEO</span>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="section-head reveal">
+          <span class="section-kicker">// ABOUT</span>
+          <h2>من از <span>null</span> شروع کردم</h2>
+        </div>
+
+        <div class="about-grid">
+          <article class="about-story reveal">
+            <p>
+              واقعاً از null. اولین روزهایی که پای کامپیوتر نشستم، حتی بلد نبودم
+              خاموشش کنم؛ هر بار دکمه‌ی پاور را نگه می‌داشتم تا قطع شود. کل
+              دانشم همان یک دکمه بود.
+            </p>
+            <p>
+              از همان نقطه‌ی صفر شروع کردم به یاد گرفتن — یک خط کد، یک خطا، یک
+              تلاش دوباره. امروز سایت می‌سازم، فروشگاه آنلاین راه می‌اندازم و
+              روی هوش مصنوعی کار می‌کنم.
+            </p>
+            <p>
+              null فقط اسم تیم ما نیست؛ یادآور همان جایی است که از آن بلند شدیم.
+            </p>
+          </article>
+
+          <div class="about-terminal reveal" aria-label="مسیر رشد">
+            <div class="terminal-top">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <code>
+              <span>$ start --from null</span>
+              <span>$ learn html css js</span>
+              <span>$ build wordpress stores</span>
+              <span>$ explore artificial intelligence</span>
+              <span class="success">$ status: growing</span>
+            </code>
+          </div>
+        </div>
+      </section>
+
+      <section class="section content-section" id="skills">
+        <div class="section-head reveal">
+          <small>SKILLS</small>
+          <h2>چیزهایی که با آن‌ها می‌سازم</h2>
+          <p>ترکیبی از توسعه وب، هوش مصنوعی، فروش آنلاین، طراحی رابط و رشد.</p>
+        </div>
+
+        <div class="skill-grid">
+          <article class="skill reveal">
+            <i data-lucide="brain-circuit"></i>
+            <h3>هوش مصنوعی</h3>
+            <p>تولید تصویر، ویدئو، مدل‌های زبانی و ابزارهای هوشمند.</p>
+          </article>
+          <article class="skill reveal">
+            <i data-lucide="code-2"></i>
+            <h3>زبان‌ها</h3>
+            <p>Python، JavaScript و Rust برای ساخت ابزار و سیستم.</p>
+          </article>
+          <article class="skill reveal">
+            <i data-lucide="server"></i>
+            <h3>Django</h3>
+            <p>بک‌اند، API و منطق پایدار برای محصول واقعی.</p>
+          </article>
+          <article class="skill reveal">
+            <i data-lucide="atom"></i>
+            <h3>React</h3>
+            <p>رابط کاربری مدرن، واکنش‌گرا و تعاملی.</p>
+          </article>
+          <article class="skill reveal">
+            <i data-lucide="layout"></i>
+            <h3>HTML & CSS</h3>
+            <p>چیدمان دقیق، تایپوگرافی تمیز و طراحی responsive.</p>
+          </article>
+          <article class="skill reveal">
+            <i data-lucide="panel-top"></i>
+            <h3>WordPress</h3>
+            <p>طراحی سایت اختصاصی و سفارشی‌سازی کاربردی.</p>
+          </article>
+          <article class="skill reveal">
+            <i data-lucide="shopping-bag"></i>
+            <h3>WooCommerce</h3>
+            <p>ساخت فروشگاه آنلاین و تجربه خرید بهتر.</p>
+          </article>
+          <article class="skill reveal">
+            <i data-lucide="search"></i>
+            <h3>SEO</h3>
+            <p>ساختار محتوا، دیده‌شدن و رشد ورودی ارگانیک.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section content-section" id="projects">
+        <div class="section-head reveal">
+          <small>PROJECTS</small>
+          <h2>پروژه‌ها</h2>
+          <p>
+            کارت‌های سه‌بعدی برای نمایش مسیر، توانایی و نوع خروجی‌هایی که
+            می‌سازم.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card reveal tilt">
+            <div class="project-icon"><i data-lucide="shirt"></i></div>
+            <h3>mode_albaseh</h3>
+            <p>برند پوشاک خانوادگی، فروش، محتوا، سئو و رشد در فضای آنلاین.</p>
+            <span>Commerce / SEO</span>
+          </article>
+
+          <article class="project-card reveal tilt">
+            <div class="project-icon"><i data-lucide="lock-keyhole"></i></div>
+            <h3>ramz</h3>
+            <p>چت رمزنگاری‌شده با Rust، WebSocket و تمرکز روی sync پیام‌ها.</p>
+            <span>Rust / Realtime</span>
+          </article>
+
+          <article class="project-card reveal tilt">
+            <div class="project-icon"><i data-lucide="globe-2"></i></div>
+            <h3>Personal Site</h3>
+            <p>سایت شخصی تعاملی با Three.js، انیمیشن و تجربه بصری مدرن.</p>
+            <span>Three.js / UI</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section content-section" id="contact">
+        <div class="section-head reveal">
+          <small>CONTACT</small>
+          <h2>برای ساختن چیز جدی، ارتباط بگیر</h2>
+          <p>
+            اینجا فقط نمایش نیست؛ شروع یک همکاری، پروژه یا ایده قابل اجراست.
+          </p>
+        </div>
+
+        <div class="contact-actions">
+          <a class="contact-card primary" href="https://t.me/alirezax_dev">
+            <i data-lucide="send"></i>
+            <span>
+              <b>شروع همکاری</b>
+            </span>
+          </a>
+          <a class="contact-card" href="https://instagram.com/alirezaz_dev">
+            <i data-lucide="instagram"></i>
+            <span>
+              <b>پیج کاری</b>
+            </span>
+          </a>
+          <script src="https://unpkg.com/lucide@latest"></script>
+
+          <a class="contact-card" href="mailto:alireza818800@gmail.com">
+            <i data-lucide="mail"></i>
+            <span>
+              <b>ارسال ایمیل</b>
+            </span>
+          </a>
+
+          <a class="contact-card" href="tel:+989931370898">
+            <i data-lucide="phone"></i>
+            <span>
+              <b>تماس مستقیم</b>
+            </span>
+          </a>
+
           <a
-            class="ghost"
+            class="contact-card"
             href="https://github.com/alireza81880"
             target="_blank"
             rel="noopener"
           >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.13-.31-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.18.77.84 1.24 1.92 1.24 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12.01 12.01 0 0024 12.5C24 5.87 18.63.5 12 .5z"
-              />
-            </svg>
-            GitHub
+            <i data-lucide="github"></i>
+            <span>
+              <b>GitHub</b>
+            </span>
           </a>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <footer>built from <b>null</b> &nbsp;—&nbsp; alireza &copy; 2026</footer>
+    <footer>
+      <span>ALIREZA / from null to everything</span>
+    </footer>
 
-    <script>
-      /* ---- MATRIX TEXT (0/1 scramble) — re-runs every time it enters view ---- */
-      const matrixHost = document.getElementById("matrix");
-      (function buildMatrix() {
-        const text = matrixHost.dataset.text;
-        let i = 0;
-        while (i < text.length) {
-          const c = text[i];
-          if (/[A-Za-z0-9]/.test(c)) {
-            // group latin/number run so it stays left-to-right (fix "llun" bug)
-            const wrap = document.createElement("span");
-            wrap.className = "ltr";
-            while (i < text.length && /[A-Za-z0-9]/.test(text[i])) {
-              const s = document.createElement("span");
-              s.className = "ch";
-              s.dataset.real = text[i];
-              s.textContent = text[i];
-              wrap.appendChild(s);
-              i++;
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module">
+      import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js";
+
+      lucide.createIcons();
+
+      const root = document.documentElement;
+      const loader = document.getElementById("loader");
+      const loaderBar = document.getElementById("loader-bar");
+      const loaderCount = document.getElementById("loader-count");
+      const themeBtn = document.getElementById("theme-toggle");
+      const soundBtn = document.getElementById("sound-toggle");
+      const menuBtn = document.getElementById("menu-toggle");
+      const nav = document.getElementById("nav");
+      const cursor = document.getElementById("cursor");
+
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) root.dataset.theme = savedTheme;
+
+      function refreshIcons() {
+        themeBtn.innerHTML =
+          root.dataset.theme === "light"
+            ? '<i data-lucide="moon"></i>'
+            : '<i data-lucide="sun"></i>';
+        lucide.createIcons();
+      }
+      refreshIcons();
+
+      themeBtn.addEventListener("click", () => {
+        root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+        localStorage.setItem("theme", root.dataset.theme);
+        refreshIcons();
+        setSceneColors();
+      });
+
+      menuBtn.addEventListener("click", () => {
+        nav.classList.toggle("open");
+        menuBtn.innerHTML = nav.classList.contains("open")
+          ? '<i data-lucide="x"></i>'
+          : '<i data-lucide="menu"></i>';
+        lucide.createIcons();
+      });
+
+      nav.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", () => {
+          nav.classList.remove("open");
+          menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+          lucide.createIcons();
+        });
+      });
+
+      let load = 0;
+      const loadTimer = setInterval(() => {
+        load += Math.ceil(Math.random() * 8);
+        if (load >= 100) {
+          load = 100;
+          clearInterval(loadTimer);
+          setTimeout(() => loader.classList.add("done"), 450);
+        }
+        loaderBar.style.width = load + "%";
+        loaderCount.textContent = load + "%";
+      }, 70);
+
+      let mx = innerWidth / 2,
+        my = innerHeight / 2,
+        cx = mx,
+        cy = my;
+      addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+      function cursorLoop() {
+        cx += (mx - cx) * 0.16;
+        cy += (my - cy) * 0.16;
+        cursor.style.left = cx + "px";
+        cursor.style.top = cy + "px";
+        requestAnimationFrame(cursorLoop);
+      }
+      cursorLoop();
+
+      document.querySelectorAll("a,button,.tilt").forEach((el) => {
+        el.addEventListener("mouseenter", () => cursor.classList.add("active"));
+        el.addEventListener("mouseleave", () =>
+          cursor.classList.remove("active"),
+        );
+      });
+
+      document.querySelectorAll(".magnetic").forEach((el) => {
+        el.addEventListener("mousemove", (e) => {
+          const r = el.getBoundingClientRect();
+          el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.08}px, ${(e.clientY - r.top - r.height / 2) * 0.08}px)`;
+        });
+        el.addEventListener(
+          "mouseleave",
+          () => (el.style.transform = "translate(0,0)"),
+        );
+      });
+
+      document.querySelectorAll(".tilt").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `perspective(900px) rotateX(${-y * 10}deg) rotateY(${x * 12}deg) translateY(-8px)`;
+        });
+        card.addEventListener("mouseleave", () => (card.style.transform = ""));
+      });
+
+      const typed = document.getElementById("typed");
+      const phrases = [
+        "توسعه‌دهنده وب",
+        "علاقه‌مند به هوش مصنوعی",
+        "سازنده تجربه‌های تعاملی",
+        "از صفر تا اجرای واقعی",
+      ];
+      let pi = 0,
+        ci = 0,
+        del = false;
+      function type() {
+        const p = phrases[pi];
+        typed.textContent = p.slice(0, ci);
+        if (!del && ci++ === p.length) {
+          del = true;
+          return setTimeout(type, 1100);
+        }
+        if (del && ci-- === 0) {
+          del = false;
+          pi = (pi + 1) % phrases.length;
+        }
+        setTimeout(type, del ? 38 : 75);
+      }
+      type();
+
+      const reveal = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(
+            (e) => e.isIntersecting && e.target.classList.add("show"),
+          );
+        },
+        { threshold: 0.16 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => reveal.observe(el));
+
+      const countObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const target = +el.dataset.count;
+            let n = 0;
+            const timer = setInterval(() => {
+              n++;
+              el.textContent = n;
+              if (n >= target) clearInterval(timer);
+            }, 55);
+            countObs.unobserve(el);
+          });
+        },
+        { threshold: 0.5 },
+      );
+      document
+        .querySelectorAll("[data-count]")
+        .forEach((el) => countObs.observe(el));
+
+      let audioCtx,
+        soundOn = false,
+        osc,
+        gain;
+      soundBtn.addEventListener("click", () => {
+        if (!audioCtx) audioCtx = new AudioContext();
+        soundOn = !soundOn;
+
+        if (soundOn) {
+          osc = audioCtx.createOscillator();
+          gain = audioCtx.createGain();
+          osc.type = "sine";
+          osc.frequency.value = 120;
+          gain.gain.value = 0.018;
+          osc.connect(gain).connect(audioCtx.destination);
+          osc.start();
+          soundBtn.innerHTML = '<i data-lucide="volume-2"></i>';
+        } else {
+          if (osc) osc.stop();
+          soundBtn.innerHTML = '<i data-lucide="volume-x"></i>';
+        }
+        lucide.createIcons();
+      });
+
+      const canvas = document.getElementById("scene");
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+      });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 1.8));
+      renderer.setSize(innerWidth, innerHeight);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        55,
+        innerWidth / innerHeight,
+        0.1,
+        100,
+      );
+      camera.position.z = 9;
+
+      const group = new THREE.Group();
+      scene.add(group);
+
+      const lightA = new THREE.PointLight(0x64ffda, 2.5, 28);
+      lightA.position.set(3, 3, 4);
+      scene.add(lightA);
+
+      const lightB = new THREE.PointLight(0x8b5cf6, 2.2, 28);
+      lightB.position.set(-3, -2, 5);
+      scene.add(lightB);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+
+      const core = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(1.35, 2),
+        new THREE.MeshPhysicalMaterial({
+          color: 0x7dd3fc,
+          roughness: 0.18,
+          metalness: 0.65,
+          clearcoat: 1,
+          transparent: true,
+          opacity: 0.9,
+        }),
+      );
+      group.add(core);
+
+      const wire = new THREE.LineSegments(
+        new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.9, 1)),
+        new THREE.LineBasicMaterial({
+          color: 0x64ffda,
+          transparent: true,
+          opacity: 0.75,
+        }),
+      );
+      group.add(wire);
+
+      const ring1 = new THREE.Mesh(
+        new THREE.TorusGeometry(2.65, 0.025, 16, 180),
+        new THREE.MeshBasicMaterial({
+          color: 0x38bdf8,
+          transparent: true,
+          opacity: 0.58,
+        }),
+      );
+      const ring2 = new THREE.Mesh(
+        new THREE.TorusGeometry(3.15, 0.018, 16, 180),
+        new THREE.MeshBasicMaterial({
+          color: 0x8b5cf6,
+          transparent: true,
+          opacity: 0.42,
+        }),
+      );
+      ring1.rotation.x = 0.9;
+      ring2.rotation.y = 1.25;
+      group.add(ring1, ring2);
+
+      function makeTextParticles() {
+        const c = document.createElement("canvas");
+        const ctx = c.getContext("2d");
+        c.width = 900;
+        c.height = 260;
+        ctx.fillStyle = "#fff";
+        ctx.font = "900 130px JetBrains Mono";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("ALIREZA", 450, 130);
+
+        const data = ctx.getImageData(0, 0, c.width, c.height).data;
+        const positions = [];
+        for (let y = 0; y < c.height; y += 8) {
+          for (let x = 0; x < c.width; x += 8) {
+            const i = (y * c.width + x) * 4 + 3;
+            if (data[i] > 128) {
+              positions.push(
+                (x - 450) / 95,
+                -(y - 130) / 95 - 2.8,
+                (Math.random() - 0.5) * 0.55,
+              );
             }
-            matrixHost.appendChild(wrap);
-          } else {
-            const s = document.createElement("span");
-            s.className = "ch";
-            s.dataset.real = c;
-            s.textContent = c === " " ? "\u00A0" : c;
-            matrixHost.appendChild(s);
-            i++;
           }
         }
-      })();
-
-      let matrixRunning = false;
-      function runMatrix() {
-        if (matrixRunning) return;
-        matrixRunning = true;
-        const spans = matrixHost.querySelectorAll(".ch");
-        const rnd = () => (Math.random() > 0.5 ? "1" : "0");
-        let done = 0;
-        spans.forEach((sp, idx) => {
-          const real = sp.dataset.real;
-          if (real === " ") {
-            done++;
-            if (done === spans.length) matrixRunning = false;
-            return;
-          }
-          setTimeout(() => {
-            sp.classList.add("on");
-            const scr = setInterval(() => (sp.textContent = rnd()), 60);
-            setTimeout(() => {
-              clearInterval(scr);
-              sp.textContent = real;
-              sp.classList.remove("on");
-              done++;
-              if (done === spans.length) matrixRunning = false;
-            }, 500);
-          }, idx * 90);
-        });
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute(
+          "position",
+          new THREE.Float32BufferAttribute(positions, 3),
+        );
+        return new THREE.Points(
+          geo,
+          new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.035,
+            transparent: true,
+            opacity: 0.88,
+          }),
+        );
       }
-      const matrixIO = new IntersectionObserver(
-        (es) => {
-          es.forEach((e) => {
-            if (e.isIntersecting) runMatrix();
-          });
-        },
-        { threshold: 0.4 },
-      );
-      matrixIO.observe(matrixHost);
 
-      /* ---- HERO IMAGE ZOOM-OUT ON SCROLL ---- */
-      const heroBg = document.querySelector(".hero__bg");
-      function zoom() {
-        if (window.matchMedia("(max-width:600px)").matches) return; // mobile shows full image
-        const p = Math.min(window.scrollY / window.innerHeight, 1); // 0..1
-        heroBg.style.transform = `scale(${(1.35 - 0.35 * p).toFixed(3)})`;
+      const textParticles = makeTextParticles();
+      scene.add(textParticles);
+
+      const starCount = 1800;
+      const starsPos = new Float32Array(starCount * 3);
+      for (let i = 0; i < starsPos.length; i += 3) {
+        starsPos[i] = (Math.random() - 0.5) * 30;
+        starsPos[i + 1] = (Math.random() - 0.5) * 18;
+        starsPos[i + 2] = (Math.random() - 0.5) * 22;
       }
-      window.addEventListener("scroll", zoom, { passive: true });
-      zoom();
-
-      /* ---- MAGNETIC BUTTON ---- */
-      (function () {
-        const wrap = document.getElementById("magnetic");
-        if (!window.matchMedia("(hover:hover)").matches) return;
-        const dist = 0.4;
-        let hovered = false;
-        wrap.addEventListener("mouseenter", () => (hovered = true));
-        wrap.addEventListener("mouseleave", () => {
-          hovered = false;
-          wrap.style.transform = "translate(0,0)";
-        });
-        document.addEventListener("mousemove", (e) => {
-          if (!hovered) return;
-          const r = wrap.getBoundingClientRect();
-          const cx = r.left + r.width / 2,
-            cy = r.top + r.height / 2;
-          wrap.style.transition = "transform .15s ease-out";
-          wrap.style.transform = `translate(${(e.clientX - cx) * dist}px, ${(e.clientY - cy) * dist}px)`;
-        });
-      })();
-
-      /* ---- SCROLL REVEAL ---- */
-      const io = new IntersectionObserver(
-        (es) => {
-          es.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add("show");
-              io.unobserve(e.target);
-            }
-          });
-        },
-        { threshold: 0.15 },
+      const starsGeo = new THREE.BufferGeometry();
+      starsGeo.setAttribute("position", new THREE.BufferAttribute(starsPos, 3));
+      const stars = new THREE.Points(
+        starsGeo,
+        new THREE.PointsMaterial({
+          color: 0xffffff,
+          size: 0.018,
+          transparent: true,
+          opacity: 0.72,
+        }),
       );
-      document.querySelectorAll(".reveal").forEach((s) => io.observe(s));
+      scene.add(stars);
 
-      /* ---- ACTIVE NAV ---- */
-      const links = [...document.querySelectorAll("nav a")];
-      const secs = links.map((a) =>
-        document.querySelector(a.getAttribute("href")),
-      );
-      const navIO = new IntersectionObserver(
-        (es) => {
-          es.forEach((e) => {
-            if (e.isIntersecting) {
-              links.forEach((l) => l.classList.remove("active"));
-              const i = secs.indexOf(e.target);
-              if (i > -1) links[i].classList.add("active");
-            }
-          });
-        },
-        { rootMargin: "-45% 0px -45% 0px" },
-      );
-      secs.forEach((s) => s && navIO.observe(s));
-      document.addEventListener("DOMContentLoaded", () => {
-        const themeToggleBtn = document.getElementById("theme-toggle");
-        const htmlElement = document.documentElement;
-        const themeIcon = document.getElementById("theme-icon");
+      function setSceneColors() {
+        const light = root.dataset.theme === "light";
+        lightA.color.setHex(light ? 0x0ea5e9 : 0x64ffda);
+        lightB.color.setHex(light ? 0x8b5cf6 : 0x7c3aed);
+        core.material.color.setHex(light ? 0x60a5fa : 0x7dd3fc);
+        wire.material.color.setHex(light ? 0x0ea5e9 : 0x64ffda);
+        ring1.material.color.setHex(light ? 0x14b8a6 : 0x38bdf8);
+        ring2.material.color.setHex(light ? 0x8b5cf6 : 0x8b5cf6);
+      }
+      setSceneColors();
 
-        // مسیرهای SVG برای آیکون‌ها
-        const sunIconPath = `
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    `;
-        const moonIconPath = `
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-    `;
+      let tx = 0,
+        ty = 0;
+      addEventListener("mousemove", (e) => {
+        tx = (e.clientX / innerWidth - 0.5) * 0.9;
+        ty = (e.clientY / innerHeight - 0.5) * 0.45;
+      });
 
-        // بررسی localStorage برای تم ذخیره شده (پیش‌فرض تاریک)
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        htmlElement.setAttribute("data-theme", savedTheme);
-        updateIcon(savedTheme);
+      function animate(t) {
+        t *= 0.001;
+        group.rotation.y += (tx - group.rotation.y) * 0.035;
+        group.rotation.x += (-ty - group.rotation.x) * 0.035;
+        core.rotation.x += 0.004;
+        core.rotation.y += 0.006;
+        wire.rotation.y -= 0.003;
+        ring1.rotation.z += 0.004;
+        ring2.rotation.x += 0.003;
+        stars.rotation.y = t * 0.018;
+        textParticles.rotation.y = Math.sin(t * 0.55) * 0.08;
+        textParticles.position.y = Math.sin(t) * 0.08;
+        lightA.position.x = 3 + Math.sin(t) * 0.8;
+        lightB.position.y = -2 + Math.cos(t * 0.8) * 0.6;
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate(0);
 
-        // رویداد کلیک دکمه
-        themeToggleBtn.addEventListener("click", () => {
-          const currentTheme = htmlElement.getAttribute("data-theme");
-          const newTheme = currentTheme === "light" ? "dark" : "light";
-
-          htmlElement.setAttribute("data-theme", newTheme);
-          localStorage.setItem("theme", newTheme);
-          updateIcon(newTheme);
-        });
-
-        // تابع به‌روزرسانی آیکون با چرخش
-        function updateIcon(theme) {
-          if (theme === "light") {
-            themeIcon.innerHTML = moonIconPath;
-            themeIcon.style.transform = "rotate(-360deg)";
-          } else {
-            themeIcon.innerHTML = sunIconPath;
-            themeIcon.style.transform = "rotate(0deg)";
-          }
-        }
+      addEventListener("resize", () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
       });
     </script>
   </body>
